@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 const Home = () => {
   const [email, setEmail] = useState("");
@@ -10,14 +11,15 @@ const Home = () => {
       if (!token) {
         window.location.href = "/";
         return;
-      }
+      }  
       try {
         const response = await axios.get("http://localhost:3000/api/home", {
           headers: { Authorization: `Bearer ${token}` },
         });
         setEmail(response.data.email);
       } catch (error) {
-        window.location.href = "/";
+        // window.location.href = "/";
+        <Link to='/'/>
       }
     };
     fetchEmail();

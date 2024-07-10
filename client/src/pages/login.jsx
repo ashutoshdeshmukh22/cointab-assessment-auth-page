@@ -1,5 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -13,7 +14,8 @@ const Login = () => {
         { email, password }
       );
       localStorage.setItem("token", response.data.token);
-      window.location.href = "/home";
+      // window.location.href = "/home";
+      <Link to='/home'/>
     } catch (error) {
       alert(error.response.data.message);
     }
