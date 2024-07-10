@@ -15,8 +15,8 @@ AppDataSource.initialize().then(async () => {
 
     app.use('/api/auth', authRoutes);    
 
-    app.get('/api/home', authMiddleware, (req, res) => {
-        res.json({ email: 'user@example.com' }); // Replace with actual user email
+    app.get('/api/me', authMiddleware, (req, res) => {
+        res.json({ name:  (req as any).user.name, email:  (req as any).user.email });  
     });
 
     const PORT = process.env.PORT || 3000;

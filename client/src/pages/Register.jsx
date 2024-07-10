@@ -2,8 +2,9 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-const Login = () => {
+const Register = () => {
   const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
@@ -18,11 +19,10 @@ const Login = () => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:3000/api/auth/login",
-        { email, password }
+        "http://localhost:3000/api/auth/register",
+        { name, email, password }
       );
       localStorage.setItem("token", response.data.token);
-      // window.location.href = "/home";
       navigate("/home");
     } catch (error) {
       alert(error.response.data.message);
@@ -35,12 +35,32 @@ const Login = () => {
         <div className="flex flex-col justify-center max-w-xs p-6 shadow-md rounded-xl sm:px-12 dark:bg-gray-50">
           <div className="sm:mx-auto sm:w-full sm:max-w-sm">
             <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
-              Login
+              Register
             </h2>
           </div>
 
           <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
             <form onSubmit={handleSubmit} className="space-y-6">
+              <div>
+                <label
+                  htmlFor="email"
+                  className="block text-sm font-medium leading-6 text-gray-900"
+                >
+                  Name
+                </label>
+                <div className="mt-2">
+                  <input
+                    id="name"
+                    name="text"
+                    type="text"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    required
+                    autoComplete="email"
+                    className="px-3 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  />
+                </div>
+              </div>
               <div>
                 <label
                   htmlFor="email"
@@ -95,12 +115,12 @@ const Login = () => {
               </div>
             </form>
             <p className="mt-10 text-center text-sm text-gray-500">
-              Not a member?{" "}
+              Already have an account?{" "}
               <a
-                onClick={() => navigate("/register")}
+                onClick={() => navigate("/")}
                 className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500 cursor-pointer"
               >
-                Register
+                Login
               </a>
             </p>
           </div>
@@ -110,4 +130,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Register;
